@@ -132,7 +132,7 @@ goto end
 @done
 echo "Setup successful!\n \nBe sure to complete any additional setup tasks the\nguide gives you.\n \nHuge thanks to the awesome people who made\n3ds.hacks.guide, Luma3DS, GodMode9, and the\nGM9Megascript, which this script has derived some of\nitself from."
 
-if rm "$[CURRDIR]/3ds.hacks.guide Setup Script.gm9"
+if rm $[CURRDIR]/3ds.hacks.guide_Setup_Script.gm9
 	echo "Self-delete successful!"
 else
 	echo "Self-delete failed.\n \nPlease delete this script manually:\n \n$[CURRDIR]/3ds.hacks.guide Setup Script.gm9"
