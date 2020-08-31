@@ -115,9 +115,9 @@ set PREVIEW_MODE "Now setting up...\n \n[X] Verify Files\n[X] Install CIAs\n[X] 
 
 # Backup Essential Files
 cp -w -n M:/boot9.bin $[GM9OUT]/boot9.bin
-# if not cp -h -w -n S:/nand_minsize.bin $[GM9OUT]/$[DATESTAMP]_$[SERIAL]_sysnand_??.bin
-# 	echo "NAND backup failed, but don't worry!\n \nThis is likely just because your SD card doesn't have\nenough space.\n \nThere's a section on the guide for this, so just\nfollow that to backup your NAND manually."
-# end
+if not cp -h -w -n S:/nand_minsize.bin $[GM9OUT]/$[DATESTAMP]_$[SERIAL]_sysnand_??.bin
+	echo "NAND backup failed, but don't worry!\n \nThis is likely just because your SD card doesn't have\nenough space.\n \nThere's a section on the guide for this, so just\nfollow that to backup your NAND manually."
+end
 
 set PREVIEW_MODE "Now setting up...\n \n[X] Verify Files\n[X] Install CIAs\n[X] Setup Luma3DS to CTRNAND\n[X] Clean Up Setup Files\n[X] Backup Essential Files"
 
