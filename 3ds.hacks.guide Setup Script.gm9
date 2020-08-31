@@ -1,0 +1,142 @@
+set PREVIEW_MODE "3ds.hacks.guide Setup Script\nBy HTV04"
+
+# 3ds.hacks.guide Setup Script v1.0
+# By HTV04
+
+# Get NAND write permissions.
+echo "This script needs SD and NAND write permissions in\norder to perform some operations."
+if not allow 0:
+	echo "SD write permissions denied.\n \nAborting..."
+	goto end
+end
+if not allow 1:
+	echo "NAND write permissions denied.\n \nAborting..."
+	goto end
+end
+
+# Start setup.
+@setup
+if not ask "Okay! Now sit back and relax while your 3DS sets up\neverything.\n \nYou'll be able to see the current progress on the top\nscreen.\n \nIf anything goes wrong (which it shouldn't), your 3DS\nwill let you know.\n \nContinue?"
+	echo "Aborting..."
+	goto end
+end
+
+set PREVIEW_MODE "Now setting up...\n \n[ ] Verify Files\n[ ] Install CIAs\n[ ] Setup Luma3DS to CTRNAND\n[ ] Clean Up Setup Files\n[ ] Backup Essential Files"
+
+# Verify Files
+if not find 0:/cias NULL
+	goto missing_files
+end
+if not find 0:/luma NULL
+	goto missing_files
+end
+if not find 0:/luma/payloads NULL
+	goto missing_files
+end
+
+if not find 0:/boot.firm NULL
+	goto missing_files
+end
+
+set PREVIEW_MODE "Now setting up...\n \n[X] Verify Files\n[ ] Install CIAs\n[ ] Setup Luma3DS to CTRNAND\n[ ] Clean Up Setup Files\n[ ] Backup Essential Files"
+
+# Install CIAs
+for 0:/cias *.cia
+	install $[FORPATH]
+next
+
+set PREVIEW_MODE "Now setting up...\n \n[X] Verify Files\n[X] Install CIAs\n[ ] Setup Luma3DS to CTRNAND\n[ ] Clean Up Setup Files\n[ ] Backup Essential Files"
+
+# Setup Luma3DS to CTRNAND
+mkdir 1:/rw/luma
+
+cp -w -n 0:/boot.firm 1:/boot.firm
+cp -w -n 0:/luma/payloads 1:/rw/luma/payloads
+
+set PREVIEW_MODE "Now setting up...\n \n[X] Verify Files\n[X] Install CIAs\n[X] Setup Luma3DS to CTRNAND\n[ ] Clean Up Setup Files\n[ ] Backup Essential Files"
+
+# Clean Up Setup Files
+rm -o -s 0:/arm9.bin
+rm -o -s 0:/arm11.bin
+ 
+rm -o -s 0:/ntr.bin
+ 
+rm -o -s 0:/soundhax-usa-o3ds.m4a
+rm -o -s 0:/soundhax-usa-n3ds.m4a
+rm -o -s 0:/soundhax-eur-o3ds.m4a
+rm -o -s 0:/soundhax-eur-n3ds.m4a
+rm -o -s 0:/soundhax-jpn-o3ds.m4a
+rm -o -s 0:/soundhax-jpn-n3ds.m4a
+rm -o -s 0:/soundhax-kor-o3ds.m4a
+rm -o -s 0:/soundhax-kor-n3ds.m4a
+rm -o -s 0:/otherapp.bin
+rm -o -s 0:/3ds/safehax.3dsx
+rm -o -s 0:/3ds/udsploit.3dsx
+rm -o -s 0:/safehaxpayload.bin
+
+rm -o -s 0:/Launcher.dat
+rm -o -s 0:/SafeB9SInstaller.dat
+ 
+rm -o -s 0:/public.sav
+rm -o -s 0:/boot.nds
+rm -o -s 0:/savedata
+rm -o -s 0:/sudoku_v0.app
+rm -o -s 0:/4swords.app
+ 
+rm -o -s 0:/luma/payloads/ntrboot_flasher.firm
+rm -o -s 0:/ntrboot
+rm -o -s 0:/ntrboot.firm
+ 
+rm -o -s 0:/boot9strap
+
+for 0:/cias *
+	rm -o -s $[FORPATH]
+next
+rm -o -s 0:/gm9/scripts/setup_ctrnand_luma3ds.gm9
+rm -o -s 0:/gm9/scripts/cleanup_sd_card.gm9
+
+rm -o -s 0:/arm9loaderhax.bin
+rm -o -s 0:/files9/aeskeydb.bin
+
+rm -o -s 0:/steelhax
+rm -o -s 0:/movable.sed
+rm -o -s 0:/3ds/steelhax_installer/*
+rm -o -s 0:/3ds/steelhax_installer.*
+rm -o -s 0:/484E4441.bin
+rm -o -s 0:/484E4441.bin.patched
+rm -o -s 0:/frogcert.bin
+rm -o -s 0:/private/ds/app/4B47554A/001/T00031_1038C2A757B77_000.ppm
+rm -o -s 0:/3ds/Frogtool.3dsx
+rm -o -s 0:/3ds/squirrelboot.3dsx
+rm -o -s 0:/usm.bin
+rm -o -s "A:/Nintendo DSiWare/F00D43D5.bin"
+
+set PREVIEW_MODE "Now setting up...\n \n[X] Verify Files\n[X] Install CIAs\n[X] Setup Luma3DS to CTRNAND\n[X] Clean Up Setup Files\n[ ] Backup Essential Files"
+
+# Backup Essential Files
+cp -w -n M:/boot9.bin $[GM9OUT]/boot9.bin
+# if not cp -h -w -n S:/nand_minsize.bin $[GM9OUT]/$[DATESTAMP]_$[SERIAL]_sysnand_??.bin
+# 	echo "NAND backup failed, but don't worry!\n \nThis is likely just because your SD card doesn't have\nenough space.\n \nThere's a section on the guide for this, so just\nfollow that to backup your NAND manually."
+# end
+
+set PREVIEW_MODE "Now setting up...\n \n[X] Verify Files\n[X] Install CIAs\n[X] Setup Luma3DS to CTRNAND\n[X] Clean Up Setup Files\n[X] Backup Essential Files"
+
+goto done
+
+# Warn user about missing files.
+@missing_files
+echo "Verification failed!\n \nSome files are missing.\n \nPlease ensure you've read the guide carefully.\n \nAborting..."
+goto end
+
+# Done!
+@done
+echo "Setup successful!\n \nBe sure to complete any additional setup tasks the\nguide gives you.\n \nHuge thanks to the awesome people who made\n3ds.hacks.guide, Luma3DS, GodMode9, and the\nGM9Megascript, which this script has derived some of\nitself from."
+
+if rm "$[CURRDIR]/3ds.hacks.guide Setup Script.gm9"
+	echo "Self-delete successful!"
+else
+	echo "Self-delete failed.\n \nPlease delete this script manually:\n \n$[CURRDIR]/3ds.hacks.guide Setup Script.gm9"
+end
+
+# Exit.
+@end
