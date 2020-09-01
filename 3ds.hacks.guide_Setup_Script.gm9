@@ -21,7 +21,13 @@ if not ask "Okay! Now sit back and relax while your 3DS sets up\neverything.\n \
 	goto end
 end
 
-set PREVIEW_MODE "Now setting up...\n \n[ ] Verify Files\n[ ] Install CIAs\n[ ] Setup Luma3DS to CTRNAND\n[ ] Clean Up Setup Files\n[ ] Backup Essential Files"
+set PROGRESS "Now setting up... \n \n"
+set PROGRESS "$[PROGRESS][ ] Verify Files\n"
+set PROGRESS "$[PROGRESS][ ] Install CIAs\n"
+set PROGRESS "$[PROGRESS][ ] Setup Luma3DS to CTRNAND\n"
+set PROGRESS "$[PROGRESS][ ] Clean Up Setup Files\n"
+set PROGRESS "$[PROGRESS][ ] Backup Essential Files"
+set PREVIEW_MODE $[PROGRESS]
 
 # Verify Files
 if not find 0:/cias NULL
@@ -38,14 +44,26 @@ if not find 0:/boot.firm NULL
 	goto missing_files
 end
 
-set PREVIEW_MODE "Now setting up...\n \n[X] Verify Files\n[ ] Install CIAs\n[ ] Setup Luma3DS to CTRNAND\n[ ] Clean Up Setup Files\n[ ] Backup Essential Files"
+set PROGRESS "Now setting up... \n \n"
+set PROGRESS "$[PROGRESS][X] Verify Files\n"
+set PROGRESS "$[PROGRESS][ ] Install CIAs\n"
+set PROGRESS "$[PROGRESS][ ] Setup Luma3DS to CTRNAND\n"
+set PROGRESS "$[PROGRESS][ ] Clean Up Setup Files\n"
+set PROGRESS "$[PROGRESS][ ] Backup Essential Files"
+set PREVIEW_MODE $[PROGRESS]
 
 # Install CIAs
 for 0:/cias *.cia
 	install $[FORPATH]
 next
 
-set PREVIEW_MODE "Now setting up...\n \n[X] Verify Files\n[X] Install CIAs\n[ ] Setup Luma3DS to CTRNAND\n[ ] Clean Up Setup Files\n[ ] Backup Essential Files"
+set PROGRESS "Now setting up... \n \n"
+set PROGRESS "$[PROGRESS][X] Verify Files\n"
+set PROGRESS "$[PROGRESS][X] Install CIAs\n"
+set PROGRESS "$[PROGRESS][ ] Setup Luma3DS to CTRNAND\n"
+set PROGRESS "$[PROGRESS][ ] Clean Up Setup Files\n"
+set PROGRESS "$[PROGRESS][ ] Backup Essential Files"
+set PREVIEW_MODE $[PROGRESS]
 
 # Setup Luma3DS to CTRNAND
 mkdir 1:/rw/luma
@@ -53,7 +71,13 @@ mkdir 1:/rw/luma
 cp -w -n 0:/boot.firm 1:/boot.firm
 cp -w -n 0:/luma/payloads 1:/rw/luma/payloads
 
-set PREVIEW_MODE "Now setting up...\n \n[X] Verify Files\n[X] Install CIAs\n[X] Setup Luma3DS to CTRNAND\n[ ] Clean Up Setup Files\n[ ] Backup Essential Files"
+set PROGRESS "Now setting up... \n \n"
+set PROGRESS "$[PROGRESS][X] Verify Files\n"
+set PROGRESS "$[PROGRESS][X] Install CIAs\n"
+set PROGRESS "$[PROGRESS][X] Setup Luma3DS to CTRNAND\n"
+set PROGRESS "$[PROGRESS][ ] Clean Up Setup Files\n"
+set PROGRESS "$[PROGRESS][ ] Backup Essential Files"
+set PREVIEW_MODE $[PROGRESS]
 
 # Clean Up Setup Files
 rm -o -s 0:/arm9.bin
@@ -111,7 +135,13 @@ rm -o -s 0:/3ds/squirrelboot.3dsx
 rm -o -s 0:/usm.bin
 rm -o -s "A:/Nintendo DSiWare/F00D43D5.bin"
 
-set PREVIEW_MODE "Now setting up...\n \n[X] Verify Files\n[X] Install CIAs\n[X] Setup Luma3DS to CTRNAND\n[X] Clean Up Setup Files\n[ ] Backup Essential Files"
+set PROGRESS "Now setting up... \n \n"
+set PROGRESS "$[PROGRESS][X] Verify Files\n"
+set PROGRESS "$[PROGRESS][X] Install CIAs\n"
+set PROGRESS "$[PROGRESS][X] Setup Luma3DS to CTRNAND\n"
+set PROGRESS "$[PROGRESS][X] Clean Up Setup Files\n"
+set PROGRESS "$[PROGRESS][ ] Backup Essential Files"
+set PREVIEW_MODE $[PROGRESS]
 
 # Backup Essential Files
 cp -w -n M:/boot9.bin $[GM9OUT]/boot9.bin
@@ -119,7 +149,13 @@ if not cp -h -w -n S:/nand_minsize.bin $[GM9OUT]/$[DATESTAMP]_$[SERIAL]_sysnand_
 	echo "NAND backup failed, but don't worry!\n \nThis is likely just because your SD card doesn't have\nenough space.\n \nThere's a section on the guide for this, so just\nfollow that to backup your NAND manually."
 end
 
-set PREVIEW_MODE "Now setting up...\n \n[X] Verify Files\n[X] Install CIAs\n[X] Setup Luma3DS to CTRNAND\n[X] Clean Up Setup Files\n[X] Backup Essential Files"
+set PROGRESS "Now setting up... \n \n"
+set PROGRESS "$[PROGRESS][X] Verify Files\n"
+set PROGRESS "$[PROGRESS][X] Install CIAs\n"
+set PROGRESS "$[PROGRESS][X] Setup Luma3DS to CTRNAND\n"
+set PROGRESS "$[PROGRESS][X] Clean Up Setup Files\n"
+set PROGRESS "$[PROGRESS][X] Backup Essential Files"
+set PREVIEW_MODE $[PROGRESS]
 
 goto done
 
